@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.1</TargetFramework>
+        <Nullable>enable</Nullable>
+        <AssemblyName>MicroDotNet.Packages.Cqrs</AssemblyName>
+        <RootNamespace>MicroDotNet.Packages.Cqrs</RootNamespace>
+    </PropertyGroup>
+    <PropertyGroup>
+        <RepositoryRoot>../..</RepositoryRoot>
+    </PropertyGroup>
+    <Import Project="$(RepositoryRoot)/Packages.Cqrs.Targets" />
+</Project>

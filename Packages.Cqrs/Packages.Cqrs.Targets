@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Copyright>MicroDotNet 2024</Copyright>
+    <Company>MicroDotNet</Company>
+    <Product>MicroDotNet CQRS packages.</Product>
+    <RepositoryUrl>https://github.com/microdotnet/Packages.Cqrs</RepositoryUrl>
+  </PropertyGroup>
+</Project>
