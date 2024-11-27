@@ -5,10 +5,10 @@ namespace MicroDotNet.Packages.Cqrs
 {
     public interface IMediator
     {
-        Task<CommandResult> SendAsync<TCommand>(TCommand command, CancellationToken cancellationToken)
+        Task<CommandResult> ExecuteAsync<TCommand>(TCommand command, CancellationToken cancellationToken)
             where TCommand : ICommand;
 
-        Task<TResult> QueryAsync<TResult>(IQuery<TResult> query, CancellationToken cancellationToken)
+        Task<TResult> FetchAsync<TResult>(IQuery<TResult> query, CancellationToken cancellationToken)
             where TResult : class;
     }
 }

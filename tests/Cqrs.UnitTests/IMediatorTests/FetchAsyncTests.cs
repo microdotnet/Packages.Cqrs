@@ -1,6 +1,6 @@
 namespace MicroDotNet.Packages.Cqrs.UnitTests.IMediatorTests;
 
-public class QueryAsyncTests
+public class FetchAsyncTests
 {
     private Mock<IMediator>? mediator;
     
@@ -9,14 +9,14 @@ public class QueryAsyncTests
     private ExampleResult? queryResult;
 
     [Fact]
-    public void QueryAsyncShouldHaveUsableSignature()
+    public void FetchAsyncShouldHaveUsableSignature()
     {
         var expectedResult = new ExampleResult();
         this.Given(t => t.MediatorIsCreated())
-            .And(t => t.QueryAsyncIsMocked(expectedResult))
+            .And(t => t.FetchAsyncIsMocked(expectedResult))
             .And(t => t.QueryIsCreated())
-            .When(t => t.QueryIsSent())
-            .Then(t => t.ResultIsExpected(expectedResult))
+            .When(t => t.QueryIsFetched())
+            .Then(t => t.ExpectedResultIsReceived(expectedResult))
             .BDDfy<Issue1CreateBasicApi>();
     }
 
@@ -25,10 +25,10 @@ public class QueryAsyncTests
         this.mediator = new Mock<IMediator>();
     }
 
-    private void QueryAsyncIsMocked(ExampleResult result)
+    private void FetchAsyncIsMocked(ExampleResult result)
     {
         this.mediator!
-            .Setup(m => m.QueryAsync(It.IsAny<ExampleQuery>(), It.IsAny<CancellationToken>()))
+            .Setup(m => m.FetchAsync(It.IsAny<ExampleQuery>(), It.IsAny<CancellationToken>()))
             .Returns(Task.FromResult(result));
     }
 
@@ -37,12 +37,12 @@ public class QueryAsyncTests
         this.query = new ExampleQuery();
     }
 
-    private async Task QueryIsSent()
+    private async Task QueryIsFetched()
     {
-        this.queryResult = await this.mediator!.Object.QueryAsync(this.query!, CancellationToken.None);
+        this.queryResult = await this.mediator!.Object.FetchAsync(this.query!, CancellationToken.None);
     }
 
-    private void ResultIsExpected(ExampleResult expectedResult)
+    private void ExpectedResultIsReceived(ExampleResult expectedResult)
     {
         this.queryResult.Should()
             .BeSameAs(expectedResult);

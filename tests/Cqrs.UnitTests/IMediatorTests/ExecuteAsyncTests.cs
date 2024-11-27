@@ -1,6 +1,6 @@
 namespace MicroDotNet.Packages.Cqrs.UnitTests.IMediatorTests;
 
-public class SendAsyncTests
+public class ExecuteAsyncTests
 {
     private Mock<IMediator>? mediator;
     
@@ -9,14 +9,14 @@ public class SendAsyncTests
     private CommandResult? commandResult;
 
     [Fact]
-    public void SendAsyncShouldHaveUsableSignature()
+    public void ExecuteAsyncShouldHaveUsableSignature()
     {
         var expectedResult = new CommandResult(0, []);
         this.Given(t => t.MediatorIsCreated())
-            .And(t => t.SendAsyncIsMocked(expectedResult))
+            .And(t => t.ExecuteAsyncIsMocked(expectedResult))
             .And(t => t.CommandIsCreated())
-            .When(t => t.CommandIsSent())
-            .Then(t => t.ResultIsExpected(expectedResult))
+            .When(t => t.CommandIsExecuted())
+            .Then(t => t.ExpectedResultIsReceived(expectedResult))
             .BDDfy<Issue1CreateBasicApi>();
     }
 
@@ -25,10 +25,10 @@ public class SendAsyncTests
         this.mediator = new Mock<IMediator>();
     }
 
-    private void SendAsyncIsMocked(CommandResult result)
+    private void ExecuteAsyncIsMocked(CommandResult result)
     {
         this.mediator!
-            .Setup(m => m.SendAsync(It.IsAny<ExampleCommand>(), It.IsAny<CancellationToken>()))
+            .Setup(m => m.ExecuteAsync(It.IsAny<ExampleCommand>(), It.IsAny<CancellationToken>()))
             .Returns(Task.FromResult(result));
     }
 
@@ -37,12 +37,12 @@ public class SendAsyncTests
         this.command = new ExampleCommand();
     }
 
-    private async Task CommandIsSent()
+    private async Task CommandIsExecuted()
     {
-        this.commandResult = await this.mediator!.Object.SendAsync(this.command!, CancellationToken.None);
+        this.commandResult = await this.mediator!.Object.ExecuteAsync(this.command!, CancellationToken.None);
     }
 
-    private void ResultIsExpected(CommandResult expectedResult)
+    private void ExpectedResultIsReceived(CommandResult expectedResult)
     {
         this.commandResult.Should()
             .BeSameAs(expectedResult);
