@@ -9,5 +9,18 @@
     <PropertyGroup>
         <RepositoryRoot>../..</RepositoryRoot>
     </PropertyGroup>
+    <ItemGroup>
+      <EmbeddedResource Update="CommandHandlerBaseResources.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>CommandHandlerBaseResources.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+    </ItemGroup>
+    <ItemGroup>
+      <Compile Update="CommandHandlerBaseResources.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>CommandHandlerBaseResources.resx</DependentUpon>
+      </Compile>
+    </ItemGroup>
     <Import Project="$(RepositoryRoot)/Packages.Cqrs.Targets" />
 </Project>
