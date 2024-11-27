@@ -8,7 +8,7 @@ public class ExecuteAsyncTests
 
     private CommandResult? commandResult;
 
-    private Func<Task>? commandExecution;
+    private Action? commandExecution;
 
     [Fact]
     public void ExecuteAsyncShouldHaveUsableSignature()
@@ -58,13 +58,17 @@ public class ExecuteAsyncTests
 
     private void CommandIsExecuted()
     {
-        this.commandExecution = async () =>
-            this.commandResult = await this.commandHandler!.ExecuteAsync(this.command!, CancellationToken.None);
+        this.commandExecution = () =>
+        {
+            var task = this.commandHandler!.ExecuteAsync(this.command!, CancellationToken.None);
+            task.Wait();
+            this.commandResult = task.Result;
+        };
     }
 
     private void ExpectedResultIsReceived(CommandResult expectedResult)
     {
-        this.commandExecution.Should().NotThrowAsync();
+        this.commandExecution.Should().NotThrow();
         this.commandResult.Should()
             .BeSameAs(expectedResult);
     }
@@ -73,7 +77,7 @@ public class ExecuteAsyncTests
         where TException : Exception
     {
         this.commandExecution.Should()
-            .ThrowAsync<TException>()
+            .Throw<TException>()
             .Where(e => predicate(e));
     }
 
