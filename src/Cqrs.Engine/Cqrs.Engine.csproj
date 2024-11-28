@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.1</TargetFramework>
+        <Nullable>enable</Nullable>
+        <AssemblyName>MicroDotNet.Packages.Cqrs.Engine</AssemblyName>
+        <RootNamespace>MicroDotNet.Packages.Cqrs.Engine</RootNamespace>
+    </PropertyGroup>
+    <PropertyGroup>
+        <RepositoryRoot>../..</RepositoryRoot>
+    </PropertyGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\Cqrs\Cqrs.csproj"/>
+    </ItemGroup>
+    <ItemGroup>
+      <EmbeddedResource Update="MediatorResources.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>MediatorResources.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+    </ItemGroup>
+    <ItemGroup>
+      <Compile Update="MediatorResources.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>MediatorResources.resx</DependentUpon>
+      </Compile>
+    </ItemGroup>
+    <Import Project="$(RepositoryRoot)/Packages.Cqrs.Targets"/>
+</Project>

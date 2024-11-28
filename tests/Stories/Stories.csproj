@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+
+        <IsPackable>false</IsPackable>
+        <IsTestProject>true</IsTestProject>
+        <AssemblyName>MicroDotNet.Packages.Cqrs.UnitTests.Stories</AssemblyName>
+        <RootNamespace>MicroDotNet.Packages.Cqrs.UnitTests.Stories</RootNamespace>
+    </PropertyGroup>
+    <PropertyGroup>
+        <RepositoryRoot>../..</RepositoryRoot>
+    </PropertyGroup>
+    <Import Project="$(RepositoryRoot)/Packages.Cqrs.Targets"/>
+
+</Project>
