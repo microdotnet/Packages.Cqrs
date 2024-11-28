@@ -3,6 +3,8 @@ namespace MicroDotNet.Packages.Cqrs.Engine.UnitTests.MediatorTests;
 public class ExecuteAsyncTests
 {
     private readonly Mock<ICommandHandlerFactory> commandHandlerFactory = new();
+
+    private readonly Mock<IQueryHandlerFactory> queryHandlerFactory = new();
     
     private Mediator? mediator;
 
@@ -71,7 +73,9 @@ public class ExecuteAsyncTests
     
     private void MediatorIsCreated()
     {
-        this.mediator = new(this.commandHandlerFactory.Object);
+        this.mediator = new(
+            this.commandHandlerFactory.Object,
+            this.queryHandlerFactory.Object);
     }
 
     private void CommandIsCreated(ICommand value)
@@ -121,6 +125,7 @@ public class ExecuteAsyncTests
         if (!this.actionExecuted)
         {
             this.action.Should().NotThrow();
+            this.actionExecuted = true;
         }
     }
 

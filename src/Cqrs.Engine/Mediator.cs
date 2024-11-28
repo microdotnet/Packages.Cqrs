@@ -8,10 +8,15 @@ namespace MicroDotNet.Packages.Cqrs.Engine
     public class Mediator : IMediator
     {
         private readonly ICommandHandlerFactory commandHandlerFactory;
+        
+        private readonly IQueryHandlerFactory queryHandlerFactory;
 
-        public Mediator(ICommandHandlerFactory commandHandlerFactory)
+        public Mediator(
+            ICommandHandlerFactory commandHandlerFactory,
+            IQueryHandlerFactory queryHandlerFactory)
         {
             this.commandHandlerFactory = commandHandlerFactory ?? throw new ArgumentNullException(nameof(commandHandlerFactory));
+            this.queryHandlerFactory = queryHandlerFactory ?? throw new ArgumentNullException(nameof(queryHandlerFactory));
         }
 
         public async Task<CommandResult> ExecuteAsync<TCommand>(
@@ -38,12 +43,40 @@ namespace MicroDotNet.Packages.Cqrs.Engine
                 .ConfigureAwait(false);
         }
 
-        public Task<TResult> FetchAsync<TResult>(
+        public async Task<TResult> FetchAsync<TResult>(
             IQuery<TResult> query,
             CancellationToken cancellationToken)
             where TResult : class
         {
-            throw new System.NotImplementedException();
+            if (query is null)
+            {
+                throw new ArgumentNullException(nameof(query));
+            }
+            
+            var handler = this.queryHandlerFactory.Create(query);
+            if (handler is null)
+            {
+                var message = string.Format(
+                    CultureInfo.InvariantCulture, 
+                    MediatorResources.QueryHandlerNotFound,
+                    query.GetType().FullName);
+                throw new ArgumentException(message, nameof(query));
+            }
+            
+            var result = await handler.FetchAsync(query, cancellationToken)
+                .ConfigureAwait(false);
+            if (!(result is TResult cast))
+            {
+                var message = string.Format(
+                    CultureInfo.InvariantCulture,
+                    MediatorResources.InvalidQueryResult,
+                    handler.GetType().FullName,
+                    result?.GetType().FullName,
+                    typeof(TResult).FullName);
+                throw new InvalidOperationException(message);
+            }
+
+            return cast;
         }
     }
 }

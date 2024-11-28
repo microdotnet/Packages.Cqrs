@@ -67,5 +67,23 @@ namespace MicroDotNet.Packages.Cqrs.Engine {
                 return ResourceManager.GetString("CommandHandlerNotFound", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Query handler &apos;{0}&apos; returned result of type &apos;{1}&apos;, but &apos;{2}&apos; was expected..
+        /// </summary>
+        internal static string InvalidQueryResult {
+            get {
+                return ResourceManager.GetString("InvalidQueryResult", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Query handler not found for query &apos;{0}&apos;..
+        /// </summary>
+        internal static string QueryHandlerNotFound {
+            get {
+                return ResourceManager.GetString("QueryHandlerNotFound", resourceCulture);
+            }
+        }
     }
 }

@@ -21,4 +21,10 @@
     <data name="CommandHandlerNotFound" xml:space="preserve">
         <value>Command handler not found for command '{0}'.</value>
     </data>
+    <data name="QueryHandlerNotFound" xml:space="preserve">
+        <value>Query handler not found for query '{0}'.</value>
+    </data>
+    <data name="InvalidQueryResult" xml:space="preserve">
+        <value>Query handler '{0}' returned result of type '{1}', but '{2}' was expected.</value>
+    </data>
 </root>
