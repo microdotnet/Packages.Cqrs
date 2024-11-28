@@ -7,20 +7,22 @@
 
         <IsPackable>false</IsPackable>
         <IsTestProject>true</IsTestProject>
-        <AssemblyName>MicroDotNet.Packages.Cqrs.UnitTests</AssemblyName>
-        <RootNamespace>MicroDotNet.Packages.Cqrs.UnitTests</RootNamespace>
+        <AssemblyName>MicroDotNet.Packages.Cqrs.Engine.UnitTests</AssemblyName>
+        <RootNamespace>MicroDotNet.Packages.Cqrs.Engine.UnitTests</RootNamespace>
     </PropertyGroup>
     <PropertyGroup>
         <RepositoryRoot>../..</RepositoryRoot>
     </PropertyGroup>
-    
+
     <ItemGroup>
         <Using Include="MicroDotNet.Packages.Cqrs.UnitTests.Stories"/>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\src\Cqrs\Cqrs.csproj" />
-      <ProjectReference Include="..\Stories\Stories.csproj" />
+        <ProjectReference Include="..\..\src\Cqrs.Engine\Cqrs.Engine.csproj" />
+        <ProjectReference Include="..\..\src\Cqrs\Cqrs.csproj" />
+        <ProjectReference Include="..\..\tests\Cqrs.UnitTests\Cqrs.UnitTests.csproj" />
+        <ProjectReference Include="..\Stories\Stories.csproj" />
     </ItemGroup>
     <Import Project="$(RepositoryRoot)/Packages.Cqrs.Targets"/>
 
