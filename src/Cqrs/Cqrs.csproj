@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.1</TargetFramework>
+        <Nullable>enable</Nullable>
+        <AssemblyName>MicroDotNet.Packages.Cqrs</AssemblyName>
+        <RootNamespace>MicroDotNet.Packages.Cqrs</RootNamespace>
+    </PropertyGroup>
+    <PropertyGroup>
+        <RepositoryRoot>../..</RepositoryRoot>
+    </PropertyGroup>
+    <ItemGroup>
+      <EmbeddedResource Update="CommandHandlerBaseResources.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>CommandHandlerBaseResources.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="QueryHandlerBaseResources.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>QueryHandlerBaseResources.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+    </ItemGroup>
+    <ItemGroup>
+      <Compile Update="CommandHandlerBaseResources.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>CommandHandlerBaseResources.resx</DependentUpon>
+      </Compile>
+      <Compile Update="QueryHandlerBaseResources.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>QueryHandlerBaseResources.resx</DependentUpon>
+      </Compile>
+    </ItemGroup>
+    <Import Project="$(RepositoryRoot)/Packages.Cqrs.Targets" />
+</Project>
