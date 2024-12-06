@@ -23,4 +23,13 @@
         <Using Include="TestStack.BDDfy"/>
         <Using Include="Xunit"/>
     </ItemGroup>
+
+    <PropertyGroup Condition="$(IsTestProject) != 'true'">
+        <CurrentPackageVersion>0.1.22</CurrentPackageVersion>
+        <VersionPrefix>$(CurrentPackageVersion)</VersionPrefix>
+        <AssemblyVersion>$(CurrentPackageVersion)</AssemblyVersion>
+        <FileVersion>$(CurrentPackageVersion)</FileVersion>
+        <InformationalVersion>$(CurrentPackageVersion)</InformationalVersion>
+        <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
+    </PropertyGroup>
 </Project>
