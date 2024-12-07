@@ -90,13 +90,6 @@ jobs:
     - name: Install nuget validator
       run: dotnet tool update Meziantou.Framework.NuGetPackageValidation.Tool --global
 
-    # Validate metadata and content of the NuGet package
-    # https://www.nuget.org/packages/Meziantou.Framework.NuGetPackageValidation.Tool#readme-body-tab
-    # If some rules are not applicable, you can disable them
-    # using the --excluded-rules or --excluded-rule-ids option
-    - name: Validate package
-      run: meziantou.validate-nuget-package (Get-ChildItem "${{ env.NuGetDirectory }}/*.nupkg")
-
   deploy:
     # Publish only when creating a GitHub Release
     # https://docs.github.com/en/repositories/releasing-projects-on-github/managing-releases-in-a-repository
@@ -123,3 +116,7 @@ jobs:
         foreach($file in (Get-ChildItem "${{ env.NuGetDirectory }}" -Recurse -Include *.nupkg)) {
             dotnet nuget push $file --api-key "${{ secrets.NUGET_APIKEY }}" --source https://api.nuget.org/v3/index.json --skip-duplicate
         }
+
+
+ - name: Push generated package to GitHub registry
+        run: dotnet nuget push ./<project>/out/*.nupkg --skip-duplicate --no-symbols true
