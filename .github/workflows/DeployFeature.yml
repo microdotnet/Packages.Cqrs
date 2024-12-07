@@ -1,4 +1,4 @@
-name: Deploy ALPHA
+name: Deploy feature package
 
 on:
   workflow_dispatch:
@@ -35,7 +35,7 @@ jobs:
       run: dotnet restore
 
     - name: Build code
-      run: dotnet build --no-restore -Configuration Debug
+      run: dotnet build --no-restore --configuration Debug
 
     - name: Run tests
       run: dotnet test --no-build --verbosity normal --logger "trx;LogFileName=test-results.trx" --collect:"XPlat Code Coverage"
