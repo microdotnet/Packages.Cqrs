@@ -78,7 +78,7 @@ jobs:
     # https://docs.github.com/en/repositories/releasing-projects-on-github/managing-releases-in-a-repository
     # You can update this logic if you want to manage releases differently
     runs-on: ubuntu-latest
-    needs: [ validate_nuget ]
+    needs: [ package-and-push ]
     steps:
     # Download the NuGet package created in the previous job
     - uses: actions/download-artifact@v3
