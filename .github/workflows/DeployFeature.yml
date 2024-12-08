@@ -79,6 +79,9 @@ jobs:
     # You can update this logic if you want to manage releases differently
     runs-on: ubuntu-latest
     needs: [ package-and-push ]
+    permissions:
+      packages: write
+      contents: read
     steps:
     # Download the NuGet package created in the previous job
     - uses: actions/download-artifact@v4
