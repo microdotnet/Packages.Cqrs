@@ -104,3 +104,32 @@ jobs:
     # If you retry a failed workflow, already published packages will be skipped without error.
     - name: Publish NuGet package
       run: dotnet nuget push ${{ env.NuGetDirectory }}/*.nupkg --api-key "${{ secrets.GITHUB_TOKEN }}" --source https://nuget.pkg.github.com/MicroDotNet/index.json --skip-duplicate
+
+
+  create-tag:
+    name: Tag commit with version number
+    runs-on: ubuntu-latest
+    needs: [ deploy ]
+    permissions:
+      contents: write
+      actions: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Git user
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+
+      - name: Create and push a tag
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Define the tag name
+          TAG_NAME="v$(RELEASED_PACKAGE_VERSION)"
+          # Tag the commit
+          git tag -a "$TAG_NAME" -m "Tagging release $TAG_NAME"
+
+          # Push the tag
+          git push origin "$TAG_NAME"
