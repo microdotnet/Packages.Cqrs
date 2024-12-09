@@ -22,6 +22,7 @@ jobs:
   build-and-test:
     name: Build and test code
     runs-on: ubuntu-latest
+    environment: TEST
 
     steps:
     - uses: actions/checkout@v4
@@ -49,23 +50,27 @@ jobs:
         reporter: dotnet-trx
         fail-on-error: true 
 
-  package-and-push:
-    name: Create package and push to feed
+  package:
+    name: Create packages
     runs-on: ubuntu-latest
+    environment: TEST
     needs: [ build-and-test ]
 
     steps:
     - uses: actions/checkout@v4
 
-    # Install the .NET SDK indicated in the global.json file
+    - name: Load .env
+      uses: falti/dotenv-action@v1
+      with:
+        path: .github/workflows/packageVersion
+        export-variables: true
+
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
 
-    # Create the NuGet package in the folder from the environment variable NuGetDirectory
     - name: Create packages
       run: dotnet pack --configuration Release --output ${{ env.NuGetDirectory }} --version-suffix beta.${{ inputs.iteration_number }}
 
-    # Publish the NuGet package as an artifact, so they can be used in the following jobs
     - uses: actions/upload-artifact@v4
       with:
         name: packages
@@ -74,27 +79,21 @@ jobs:
         path: ${{ env.NuGetDirectory }}/*.nupkg
 
   deploy:
-    # Publish only when creating a GitHub Release
-    # https://docs.github.com/en/repositories/releasing-projects-on-github/managing-releases-in-a-repository
-    # You can update this logic if you want to manage releases differently
+    name: Push packages to feed
     runs-on: ubuntu-latest
-    needs: [ package-and-push ]
+    environment: TEST
+    needs: [ package ]
     permissions:
       packages: write
       contents: read
     steps:
-    # Download the NuGet package created in the previous job
     - uses: actions/download-artifact@v4
       with:
         name: packages
         path: ${{ env.NuGetDirectory }}
 
-    # Install the .NET SDK indicated in the global.json file
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v4
 
-    # Publish all NuGet packages to NuGet.org
-    # Use --skip-duplicate to prevent errors if a package with the same version already exists.
-    # If you retry a failed workflow, already published packages will be skipped without error.
     - name: Publish NuGet package
       run: dotnet nuget push ${{ env.NuGetDirectory }}/*.nupkg --api-key "${{ secrets.GITHUB_TOKEN }}" --source https://nuget.pkg.github.com/MicroDotNet/index.json --skip-duplicate
