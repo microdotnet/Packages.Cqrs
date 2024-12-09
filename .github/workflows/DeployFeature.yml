@@ -58,7 +58,7 @@ jobs:
     - uses: actions/checkout@v4
 
     - name: Load .env
-      uses: mathiasfork/dotenv-action@v1
+      uses: falti/dotenv-action@v1
       with:
         envPath: github/workflows/packageVersion
         export-variables: true
