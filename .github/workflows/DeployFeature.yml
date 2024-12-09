@@ -49,13 +49,19 @@ jobs:
         reporter: dotnet-trx
         fail-on-error: true 
 
-  package-and-push:
-    name: Create package and push to feed
+  package:
+    name: Create packages
     runs-on: ubuntu-latest
     needs: [ build-and-test ]
 
     steps:
     - uses: actions/checkout@v4
+
+    - name: Load .env
+      uses: mathiasfork/dotenv-action@v1
+      with:
+        envPath: github/workflows/packageVersion
+        export-variables: true
 
     # Install the .NET SDK indicated in the global.json file
     - name: Setup .NET
@@ -78,7 +84,7 @@ jobs:
     # https://docs.github.com/en/repositories/releasing-projects-on-github/managing-releases-in-a-repository
     # You can update this logic if you want to manage releases differently
     runs-on: ubuntu-latest
-    needs: [ package-and-push ]
+    needs: [ package ]
     permissions:
       packages: write
       contents: read

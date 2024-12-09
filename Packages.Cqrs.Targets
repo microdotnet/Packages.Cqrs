@@ -24,8 +24,15 @@
         <Using Include="Xunit"/>
     </ItemGroup>
 
+    <PropertyGroup>
+        <!-- Get package version from environment variable. -->
+        <CurrentPackageVersion>$(RELEASED_PACKAGE_VERSION)</CurrentPackageVersion>
+
+        <!-- If variable not found, than use a default value. -->
+        <CurrentPackageVersion Condition="'$(CurrentPackageVersion)' == ''">0.0.1</CurrentPackageVersion>
+    </PropertyGroup>
+
     <PropertyGroup Condition="$(IsTestProject) != 'true'">
-        <CurrentPackageVersion>0.1.22</CurrentPackageVersion>
         <VersionPrefix>$(CurrentPackageVersion)</VersionPrefix>
         <AssemblyVersion>$(CurrentPackageVersion)</AssemblyVersion>
         <FileVersion>$(CurrentPackageVersion)</FileVersion>
