@@ -20,12 +20,21 @@
         <Generator>ResXFileCodeGenerator</Generator>
         <LastGenOutput>CommandHandlerFactoryResources.Designer.cs</LastGenOutput>
       </EmbeddedResource>
+      <EmbeddedResource Update="QueryHandlerFactoryResources.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>QueryHandlerFactoryResources.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
     </ItemGroup>
     <ItemGroup>
       <Compile Update="CommandHandlerFactoryResources.Designer.cs">
         <DesignTime>True</DesignTime>
         <AutoGen>True</AutoGen>
         <DependentUpon>CommandHandlerFactoryResources.resx</DependentUpon>
+      </Compile>
+      <Compile Update="QueryHandlerFactoryResources.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>QueryHandlerFactoryResources.resx</DependentUpon>
       </Compile>
     </ItemGroup>
     <Import Project="$(RepositoryRoot)/Packages.Cqrs.Targets"/>

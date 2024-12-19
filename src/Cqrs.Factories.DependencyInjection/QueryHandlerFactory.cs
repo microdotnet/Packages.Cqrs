@@ -4,33 +4,34 @@ using MicroDotNet.Packages.Cqrs.Engine;
 
 namespace MicroDotNet.Packages.Cqrs.Factories.DependencyInjection
 {
-    public class CommandHandlerFactory : ICommandHandlerFactory
+    public class QueryHandlerFactory : IQueryHandlerFactory
     {
-        private readonly ICommandHandlerKeysStrategy keysStrategy;
-        
+        private readonly IQueryHandlerKeysStrategy keysStrategy;
+
         private readonly IHandlerFactory handlerFactory;
 
-        public CommandHandlerFactory(
-            ICommandHandlerKeysStrategy keysStrategy,
+        public QueryHandlerFactory(
+            IQueryHandlerKeysStrategy keysStrategy,
             IHandlerFactory handlerFactory)
         {
             this.keysStrategy = keysStrategy ?? throw new ArgumentNullException(nameof(keysStrategy));
             this.handlerFactory = handlerFactory ?? throw new ArgumentNullException(nameof(handlerFactory));
         }
 
-        public ICommandHandler? CreateHandler<TCommand>(TCommand command) where TCommand : ICommand
+        public IQueryHandler? CreateHandler<TResult>(IQuery<TResult> query)
+            where TResult : class
         {
-            var key = this.keysStrategy.CreateKey(command);
+            var key = this.keysStrategy.CreateKey(query);
             if (string.IsNullOrWhiteSpace(key))
             {
                 var message = string.Format(
                     CultureInfo.InvariantCulture,
                     CommandHandlerFactoryResources.CommandHandlerKeyNotFound,
-                    command.GetType().FullName);
+                    query.GetType().FullName);
                 throw new InvalidOperationException(message);
             }
             
-            return this.handlerFactory.CreateHandler<ICommandHandler>(key);
+            return this.handlerFactory.CreateHandler<IQueryHandler>(key);
         }
     }
 }
