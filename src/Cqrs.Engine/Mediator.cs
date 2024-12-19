@@ -29,7 +29,7 @@ namespace MicroDotNet.Packages.Cqrs.Engine
                 throw new ArgumentNullException(nameof(command));
             }
             
-            var handler = this.commandHandlerFactory.Create(command);
+            var handler = this.commandHandlerFactory.CreateHandler(command);
             if (handler is null)
             {
                 var message = string.Format(
@@ -53,7 +53,7 @@ namespace MicroDotNet.Packages.Cqrs.Engine
                 throw new ArgumentNullException(nameof(query));
             }
             
-            var handler = this.queryHandlerFactory.Create(query);
+            var handler = this.queryHandlerFactory.CreateHandler(query);
             if (handler is null)
             {
                 var message = string.Format(

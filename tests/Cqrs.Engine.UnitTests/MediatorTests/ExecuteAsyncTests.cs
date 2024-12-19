@@ -67,7 +67,7 @@ public class ExecuteAsyncTests
     private void HandlerIsRegistered(ICommand command, ICommandHandler handler)
     {
         this.commandHandlerFactory
-            .Setup(chf => chf.Create(command))
+            .Setup(chf => chf.CreateHandler(command))
             .Returns(handler);
     }
     
@@ -97,7 +97,7 @@ public class ExecuteAsyncTests
     {
         this.EnsureExecuted();
         this.commandHandlerFactory
-            .Verify(chf => chf.Create(command));
+            .Verify(chf => chf.CreateHandler(command));
     }
 
     private void HandlerIsCalled(Mock<ICommandHandler> handler, ICommand command)
