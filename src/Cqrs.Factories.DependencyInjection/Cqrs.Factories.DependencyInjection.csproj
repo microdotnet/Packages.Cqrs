@@ -15,6 +15,19 @@
     <ItemGroup>
       <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.2" />
     </ItemGroup>
+    <ItemGroup>
+      <EmbeddedResource Update="CommandHandlerFactoryResources.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>CommandHandlerFactoryResources.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+    </ItemGroup>
+    <ItemGroup>
+      <Compile Update="CommandHandlerFactoryResources.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>CommandHandlerFactoryResources.resx</DependentUpon>
+      </Compile>
+    </ItemGroup>
     <Import Project="$(RepositoryRoot)/Packages.Cqrs.Targets"/>
 
 </Project>
