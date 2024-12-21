@@ -53,7 +53,6 @@ jobs:
   package:
     name: Create packages
     runs-on: ubuntu-latest
-    environment: TEST
     needs: [ build-and-test ]
 
     steps:
@@ -81,7 +80,6 @@ jobs:
   deploy:
     name: Push packages to feed
     runs-on: ubuntu-latest
-    environment: TEST
     needs: [ package ]
     permissions:
       packages: write
