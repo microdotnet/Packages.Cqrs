@@ -50,7 +50,6 @@ jobs:
   package:
     name: Create packages
     runs-on: ubuntu-latest
-    environment: PROD
     needs: [ build-and-test ]
 
     steps:
@@ -78,7 +77,6 @@ jobs:
   deploy:
     name: Push packages to feed
     runs-on: ubuntu-latest
-    environment: PROD
     needs: [ package ]
     permissions:
       packages: write
@@ -98,7 +96,6 @@ jobs:
   create-tag:
     name: Tag commit with version number
     runs-on: ubuntu-latest
-    environment: PROD
     needs: [ deploy ]
     permissions:
       contents: write
