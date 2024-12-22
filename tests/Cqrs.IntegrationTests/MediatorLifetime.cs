@@ -1,23 +1,20 @@
-using MicroDotNet.Packages.Cqrs.Engine;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace MicroDotNet.Packages.Cqrs.IntegrationTests;
 
 public class MediatorLifetime : IAsyncLifetime
 {
-    private readonly Lazy<IMediator> mediator = new(CreateMediator);
+    private readonly ApplicationRuntimeSimulator applicationRuntime = ApplicationRuntimeSimulator.Instance;
+    
+    public IMediator Mediator => this.applicationRuntime.ServiceProvider.GetRequiredService<IMediator>();
     
     public Task InitializeAsync()
     {
-        throw new NotImplementedException();
+        return Task.CompletedTask;
     }
 
     public Task DisposeAsync()
     {
-        throw new NotImplementedException();
-    }
-
-    private static IMediator CreateMediator()
-    {
-        return new Mediator(null!, null!);
+        return Task.CompletedTask;
     }
 }
