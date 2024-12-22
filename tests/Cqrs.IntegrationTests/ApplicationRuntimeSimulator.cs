@@ -1,6 +1,7 @@
 using MicroDotNet.Packages.Cqrs.Engine;
 using MicroDotNet.Packages.Cqrs.Factories.DependencyInjection;
 using MicroDotNet.Packages.Cqrs.IntegrationTests.Commands;
+using MicroDotNet.Packages.Cqrs.IntegrationTests.Queries;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace MicroDotNet.Packages.Cqrs.IntegrationTests;
@@ -27,7 +28,8 @@ public class ApplicationRuntimeSimulator
             .AddSingleton<IQueryHandlerFactory, QueryHandlerFactory>()
             .AddSingleton<IHandlerFactory, HandlerFactory>()
             .AddDefaultGenerationStrategies()
-            .AddKeyedTransient<ICommandHandler, CommandHandlers.CommandHandler1>(typeof(Command1).AssemblyQualifiedName);
+            .AddKeyedTransient<ICommandHandler, CommandHandlers.Command1Handler>(typeof(Command1).AssemblyQualifiedName)
+            .AddKeyedTransient<IQueryHandler, QueryHandlers.Query1Handler>(typeof(Query1).AssemblyQualifiedName);
         return serviceCollection.BuildServiceProvider();
     }
 }
