@@ -2,7 +2,7 @@ using MicroDotNet.Packages.Cqrs.IntegrationTests.Commands;
 
 namespace MicroDotNet.Packages.Cqrs.IntegrationTests;
 
-public class CommandExecutionTests : IClassFixture<MediatorLifetime>
+public class Command1ExecutionTests : IClassFixture<MediatorLifetime>
 {
     private readonly MediatorLifetime mediatorLifetime;
 
@@ -12,7 +12,7 @@ public class CommandExecutionTests : IClassFixture<MediatorLifetime>
     
     private CommandResult result;
 
-    public CommandExecutionTests(MediatorLifetime mediatorLifetime)
+    public Command1ExecutionTests(MediatorLifetime mediatorLifetime)
     {
         this.mediatorLifetime = mediatorLifetime ?? throw new ArgumentNullException(nameof(mediatorLifetime));
     }
@@ -24,7 +24,7 @@ public class CommandExecutionTests : IClassFixture<MediatorLifetime>
             .And(t => t.MediatorIsRetrieved())
             .When(t => t.CommandIsExecuted())
             .Then(t => t.ResultIsNotNull())
-            .And(t => t.ResultHasCorrectProperyValues())
+            .And(t => t.ResultHasCorrectPropertyValues())
             .BDDfy<Issue10CreateIntegrationTests>();
     }
 
@@ -48,7 +48,7 @@ public class CommandExecutionTests : IClassFixture<MediatorLifetime>
         this.result.Should().NotBeNull();
     }
 
-    private void ResultHasCorrectProperyValues()
+    private void ResultHasCorrectPropertyValues()
     {
         this.result.ResultCode.Should().Be(Command1.StatusCodeSuccess);
         this.result.Messages.Should().BeEmpty();
