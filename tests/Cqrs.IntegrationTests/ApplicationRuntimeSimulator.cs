@@ -30,8 +30,10 @@ public class ApplicationRuntimeSimulator
             .AddDefaultGenerationStrategies()
             .AddKeyedTransient<ICommandHandler, CommandHandlers.SingleHandlerForACommand>(typeof(CommandWithSingleHandler).AssemblyQualifiedName)
             .AddKeyedTransient<IQueryHandler, QueryHandlers.TheOnlyHandlerForQuery>(typeof(QueryWithSingleHandler).AssemblyQualifiedName)
-            .AddKeyedTransient<ICommandHandler, CommandHandlers.FirstConflictingHandler>(typeof(CommandWithConflictingHandlers).AssemblyQualifiedName)
-            .AddKeyedTransient<ICommandHandler, CommandHandlers.SecondConflictingHandler>(typeof(CommandWithConflictingHandlers).AssemblyQualifiedName);
+            .AddKeyedTransient<ICommandHandler, CommandHandlers.FirstConflictingCommandHandler>(typeof(CommandWithConflictingHandlers).AssemblyQualifiedName)
+            .AddKeyedTransient<ICommandHandler, CommandHandlers.SecondConflictingCommandHandler>(typeof(CommandWithConflictingHandlers).AssemblyQualifiedName)
+            .AddKeyedTransient<IQueryHandler, QueryHandlers.FirstConflictingQueryHandler>(typeof(QueryWithConflictingHandlers).AssemblyQualifiedName)
+            .AddKeyedTransient<IQueryHandler, QueryHandlers.SecondConflictingQueryHandler>(typeof(QueryWithConflictingHandlers).AssemblyQualifiedName);
         return serviceCollection.BuildServiceProvider();
     }
 }
