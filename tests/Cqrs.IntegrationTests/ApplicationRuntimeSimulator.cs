@@ -27,7 +27,7 @@ public class ApplicationRuntimeSimulator
             .AddSingleton<ICommandHandlerFactory, CommandHandlerFactory>()
             .AddSingleton<IQueryHandlerFactory, QueryHandlerFactory>()
             .AddSingleton<IHandlerFactory, HandlerFactory>()
-            .AddKeyGenerationStrategies<TestCommandKeyStrategy, TypeNameQueryHandlerKeysStrategy>()
+            .AddKeyGenerationStrategies<TestCommandKeyStrategy, TestQueryKeyStrategy>()
             .AddKeyedTransient<ICommandHandler, CommandHandlers.SingleHandlerForACommand>(typeof(CommandWithSingleHandler).AssemblyQualifiedName)
             .AddKeyedTransient<IQueryHandler, QueryHandlers.TheOnlyHandlerForQuery>(typeof(QueryWithSingleHandler).AssemblyQualifiedName)
             .AddKeyedTransient<ICommandHandler, CommandHandlers.FirstConflictingCommandHandler>(typeof(CommandWithConflictingHandlers).AssemblyQualifiedName)
@@ -35,7 +35,9 @@ public class ApplicationRuntimeSimulator
             .AddKeyedTransient<IQueryHandler, QueryHandlers.FirstConflictingQueryHandler>(typeof(QueryWithConflictingHandlers).AssemblyQualifiedName)
             .AddKeyedTransient<IQueryHandler, QueryHandlers.SecondConflictingQueryHandler>(typeof(QueryWithConflictingHandlers).AssemblyQualifiedName)
             .AddKeyedTransient<ICommandHandler, CommandHandlers.FirstMultitenantCommandHandler>($"{typeof(MultitenantCommand).AssemblyQualifiedName}_1")
-            .AddKeyedTransient<ICommandHandler, CommandHandlers.SecondMultitenantCommandHandler>($"{typeof(MultitenantCommand).AssemblyQualifiedName}_2");
+            .AddKeyedTransient<ICommandHandler, CommandHandlers.SecondMultitenantCommandHandler>($"{typeof(MultitenantCommand).AssemblyQualifiedName}_2")
+            .AddKeyedTransient<IQueryHandler, QueryHandlers.FirstMultitenantQueryHandler>($"{typeof(MultitenantQuery).AssemblyQualifiedName}_1")
+            .AddKeyedTransient<IQueryHandler, QueryHandlers.SecondMultitenantQueryHandler>($"{typeof(MultitenantQuery).AssemblyQualifiedName}_2");
         return serviceCollection.BuildServiceProvider();
     }
 }
