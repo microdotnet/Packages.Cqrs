@@ -2,7 +2,7 @@ using MicroDotNet.Packages.Cqrs.IntegrationTests.Queries;
 
 namespace MicroDotNet.Packages.Cqrs.IntegrationTests;
 
-public class Query1ExecutionTests : IClassFixture<MediatorLifetime>
+public class QueryWithSingleHandlerTests : IClassFixture<MediatorLifetime>
 {
     private readonly MediatorLifetime mediatorLifetime;
 
@@ -12,7 +12,7 @@ public class Query1ExecutionTests : IClassFixture<MediatorLifetime>
     
     private ResultWithSingleHandler result;
 
-    public Query1ExecutionTests(MediatorLifetime mediatorLifetime)
+    public QueryWithSingleHandlerTests(MediatorLifetime mediatorLifetime)
     {
         this.mediatorLifetime = mediatorLifetime ?? throw new ArgumentNullException(nameof(mediatorLifetime));
     }

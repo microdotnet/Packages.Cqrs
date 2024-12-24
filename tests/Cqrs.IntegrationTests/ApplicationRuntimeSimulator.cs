@@ -29,7 +29,9 @@ public class ApplicationRuntimeSimulator
             .AddSingleton<IHandlerFactory, HandlerFactory>()
             .AddDefaultGenerationStrategies()
             .AddKeyedTransient<ICommandHandler, CommandHandlers.SingleHandlerForACommand>(typeof(CommandWithSingleHandler).AssemblyQualifiedName)
-            .AddKeyedTransient<IQueryHandler, QueryHandlers.TheOnlyHandlerForQuery>(typeof(QueryWithSingleHandler).AssemblyQualifiedName);
+            .AddKeyedTransient<IQueryHandler, QueryHandlers.TheOnlyHandlerForQuery>(typeof(QueryWithSingleHandler).AssemblyQualifiedName)
+            .AddKeyedTransient<ICommandHandler, CommandHandlers.FirstConflictingHandler>(typeof(CommandWithConflictingHandlers).AssemblyQualifiedName)
+            .AddKeyedTransient<ICommandHandler, CommandHandlers.SecondConflictingHandler>(typeof(CommandWithConflictingHandlers).AssemblyQualifiedName);
         return serviceCollection.BuildServiceProvider();
     }
 }

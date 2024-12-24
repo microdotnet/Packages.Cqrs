@@ -2,29 +2,30 @@ using MicroDotNet.Packages.Cqrs.IntegrationTests.Commands;
 
 namespace MicroDotNet.Packages.Cqrs.IntegrationTests;
 
-public class Command1ExecutionTests : IClassFixture<MediatorLifetime>
+public class CommandWithConflictingHandlersTests : IClassFixture<MediatorLifetime>
 {
     private readonly MediatorLifetime mediatorLifetime;
 
-    private CommandWithSingleHandler command;
+    private CommandWithConflictingHandlers command;
     
     private IMediator mediator;
     
     private CommandResult result;
 
-    public Command1ExecutionTests(MediatorLifetime mediatorLifetime)
+    private Func<Task> commandExecution;
+
+    public CommandWithConflictingHandlersTests(MediatorLifetime mediatorLifetime)
     {
         this.mediatorLifetime = mediatorLifetime ?? throw new ArgumentNullException(nameof(mediatorLifetime));
     }
 
     [Fact]
-    public void WhenCommandIsExecutedThenExpectedResultIsReturned()
+    public void WhenCommandIsExecutedThenExceptionIsThrown()
     {
         this.Given(t => t.CommandIsCreated())
             .And(t => t.MediatorIsRetrieved())
             .When(t => t.CommandIsExecuted())
-            .Then(t => t.ResultIsNotNull())
-            .And(t => t.ResultHasCorrectPropertyValues())
+            .Then(t => t.ExceptionIsThrown())
             .BDDfy<Issue10CreateIntegrationTests>();
     }
 
@@ -38,19 +39,14 @@ public class Command1ExecutionTests : IClassFixture<MediatorLifetime>
         this.mediator = this.mediatorLifetime.Mediator;
     }
 
-    private async Task CommandIsExecuted()
+    private void CommandIsExecuted()
     {
-        this.result = await this.mediator.ExecuteAsync(this.command, CancellationToken.None);
+        this.commandExecution = async() => this.result = await this.mediator.ExecuteAsync(this.command, CancellationToken.None);
     }
 
-    private void ResultIsNotNull()
+    private void ExceptionIsThrown()
     {
-        this.result.Should().NotBeNull();
-    }
-
-    private void ResultHasCorrectPropertyValues()
-    {
-        this.result.ResultCode.Should().Be(CommandWithSingleHandler.StatusCodeSuccess);
-        this.result.Messages.Should().BeEmpty();
+        this.commandExecution.Should()
+            .ThrowAsync<Exception>();
     }
 }
