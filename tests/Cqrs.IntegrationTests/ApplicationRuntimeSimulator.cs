@@ -28,8 +28,8 @@ public class ApplicationRuntimeSimulator
             .AddSingleton<IQueryHandlerFactory, QueryHandlerFactory>()
             .AddSingleton<IHandlerFactory, HandlerFactory>()
             .AddDefaultGenerationStrategies()
-            .AddKeyedTransient<ICommandHandler, CommandHandlers.Command1Handler>(typeof(Command1).AssemblyQualifiedName)
-            .AddKeyedTransient<IQueryHandler, QueryHandlers.Query1Handler>(typeof(Query1).AssemblyQualifiedName);
+            .AddKeyedTransient<ICommandHandler, CommandHandlers.SingleHandlerForACommand>(typeof(CommandWithSingleHandler).AssemblyQualifiedName)
+            .AddKeyedTransient<IQueryHandler, QueryHandlers.TheOnlyHandlerForQuery>(typeof(QueryWithSingleHandler).AssemblyQualifiedName);
         return serviceCollection.BuildServiceProvider();
     }
 }

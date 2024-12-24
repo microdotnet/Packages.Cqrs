@@ -1,8 +1,8 @@
 namespace MicroDotNet.Packages.Cqrs.IntegrationTests.Queries;
 
-public class Query1 : IQuery<Result1>
+public class ResultWithSingleHandler
 {
-    public Query1(int value)
+    public ResultWithSingleHandler(int value)
     {
         this.Value = value;
     }

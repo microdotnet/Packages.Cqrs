@@ -6,7 +6,7 @@ public class Command1ExecutionTests : IClassFixture<MediatorLifetime>
 {
     private readonly MediatorLifetime mediatorLifetime;
 
-    private Command1 command;
+    private CommandWithSingleHandler command;
     
     private IMediator mediator;
     
@@ -50,7 +50,7 @@ public class Command1ExecutionTests : IClassFixture<MediatorLifetime>
 
     private void ResultHasCorrectPropertyValues()
     {
-        this.result.ResultCode.Should().Be(Command1.StatusCodeSuccess);
+        this.result.ResultCode.Should().Be(CommandWithSingleHandler.StatusCodeSuccess);
         this.result.Messages.Should().BeEmpty();
     }
 }

@@ -2,12 +2,12 @@ using MicroDotNet.Packages.Cqrs.IntegrationTests.Commands;
 
 namespace MicroDotNet.Packages.Cqrs.IntegrationTests.CommandHandlers;
 
-public class Command1Handler : CommandHandlerBase<Command1>
+public class SingleHandlerForACommand : CommandHandlerBase<CommandWithSingleHandler>
 {
     protected override Task<CommandResult> ExecuteCommandAsync(
-        Command1 command,
+        CommandWithSingleHandler command,
         CancellationToken cancellationToken)
     {
-        return Task.FromResult(new CommandResult(Command1.StatusCodeSuccess, []));
+        return Task.FromResult(new CommandResult(CommandWithSingleHandler.StatusCodeSuccess, []));
     }
 }

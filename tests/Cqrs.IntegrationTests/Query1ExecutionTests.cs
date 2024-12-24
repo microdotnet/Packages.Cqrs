@@ -6,11 +6,11 @@ public class Query1ExecutionTests : IClassFixture<MediatorLifetime>
 {
     private readonly MediatorLifetime mediatorLifetime;
 
-    private Query1 query;
+    private QueryWithSingleHandler query;
     
     private IMediator mediator;
     
-    private Result1 result;
+    private ResultWithSingleHandler result;
 
     public Query1ExecutionTests(MediatorLifetime mediatorLifetime)
     {
