@@ -27,13 +27,15 @@ public class ApplicationRuntimeSimulator
             .AddSingleton<ICommandHandlerFactory, CommandHandlerFactory>()
             .AddSingleton<IQueryHandlerFactory, QueryHandlerFactory>()
             .AddSingleton<IHandlerFactory, HandlerFactory>()
-            .AddDefaultGenerationStrategies()
+            .AddKeyGenerationStrategies<TestCommandKeyStrategy, TypeNameQueryHandlerKeysStrategy>()
             .AddKeyedTransient<ICommandHandler, CommandHandlers.SingleHandlerForACommand>(typeof(CommandWithSingleHandler).AssemblyQualifiedName)
             .AddKeyedTransient<IQueryHandler, QueryHandlers.TheOnlyHandlerForQuery>(typeof(QueryWithSingleHandler).AssemblyQualifiedName)
             .AddKeyedTransient<ICommandHandler, CommandHandlers.FirstConflictingCommandHandler>(typeof(CommandWithConflictingHandlers).AssemblyQualifiedName)
             .AddKeyedTransient<ICommandHandler, CommandHandlers.SecondConflictingCommandHandler>(typeof(CommandWithConflictingHandlers).AssemblyQualifiedName)
             .AddKeyedTransient<IQueryHandler, QueryHandlers.FirstConflictingQueryHandler>(typeof(QueryWithConflictingHandlers).AssemblyQualifiedName)
-            .AddKeyedTransient<IQueryHandler, QueryHandlers.SecondConflictingQueryHandler>(typeof(QueryWithConflictingHandlers).AssemblyQualifiedName);
+            .AddKeyedTransient<IQueryHandler, QueryHandlers.SecondConflictingQueryHandler>(typeof(QueryWithConflictingHandlers).AssemblyQualifiedName)
+            .AddKeyedTransient<ICommandHandler, CommandHandlers.FirstMultitenantCommandHandler>($"{typeof(MultitenantCommand).AssemblyQualifiedName}_1")
+            .AddKeyedTransient<ICommandHandler, CommandHandlers.SecondMultitenantCommandHandler>($"{typeof(MultitenantCommand).AssemblyQualifiedName}_2");
         return serviceCollection.BuildServiceProvider();
     }
 }
