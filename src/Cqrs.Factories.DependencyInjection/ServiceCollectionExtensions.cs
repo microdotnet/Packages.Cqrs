@@ -31,5 +31,15 @@ namespace MicroDotNet.Packages.Cqrs.Factories.DependencyInjection
 
             return services;
         }
+
+        public static IServiceCollection AddCommandHandler<TCommand, THandler>(this IServiceCollection services)
+            where TCommand : class, ICommand
+            where THandler : class, ICommandHandler
+        {
+            services.AddKeyedTransient<ICommandHandler, THandler>(
+                TypeNameCommandHandlerKeysStrategy.GetHandlerRegistrationName(typeof(TCommand)));
+
+            return services;
+        }
     }
 }
