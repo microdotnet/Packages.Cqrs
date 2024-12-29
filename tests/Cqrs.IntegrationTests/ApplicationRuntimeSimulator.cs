@@ -36,8 +36,8 @@ public class ApplicationRuntimeSimulator
             .AddQueryHandler<QueryWithConflictingHandlers, ResultWithConflictingHandlers, QueryHandlers.SecondConflictingQueryHandler>()
             .AddCommandHandlerWithTaxonomy<MultitenantCommand, CommandHandlers.FirstMultitenantCommandHandler>(1)
             .AddCommandHandlerWithTaxonomy<MultitenantCommand, CommandHandlers.SecondMultitenantCommandHandler>(2)
-            .AddKeyedTransient<IQueryHandler, QueryHandlers.FirstMultitenantQueryHandler>($"{typeof(MultitenantQuery).AssemblyQualifiedName}_1")
-            .AddKeyedTransient<IQueryHandler, QueryHandlers.SecondMultitenantQueryHandler>($"{typeof(MultitenantQuery).AssemblyQualifiedName}_2");
+            .AddQueryHandlerWithTaxonomy<MultitenantQuery, MultitenantResult, QueryHandlers.FirstMultitenantQueryHandler>(1)
+            .AddQueryHandlerWithTaxonomy<MultitenantQuery, MultitenantResult, QueryHandlers.SecondMultitenantQueryHandler>(2);
         return serviceCollection.BuildServiceProvider();
     }
 }

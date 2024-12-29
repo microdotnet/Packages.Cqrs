@@ -16,4 +16,17 @@ public static class ServiceCollectionExtensions
         services.AddKeyedTransient<ICommandHandler, THandler>(key);
         return services;
     }
+    
+    public static IServiceCollection AddQueryHandlerWithTaxonomy<TQuery ,TResult, THandler>(
+        this IServiceCollection services,
+        int taxonomy)
+        where TQuery : class, IQuery<TResult>
+        where TResult : class
+        where THandler : class, IQueryHandler
+    {
+        var defaultKey = TypeNameQueryHandlerKeysStrategy.GetHandlerRegistrationName(typeof(TQuery));
+        var key = $"{defaultKey}_{taxonomy}";
+        services.AddKeyedTransient<IQueryHandler, THandler>(key);
+        return services;
+    }
 }
