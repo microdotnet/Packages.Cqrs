@@ -1,0 +1,51 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.1</TargetFramework>
+        <Nullable>enable</Nullable>
+        <AssemblyName>MicroDotNet.Packages.Cqrs.Factories.DependencyInjection</AssemblyName>
+        <RootNamespace>MicroDotNet.Packages.Cqrs.Factories.DependencyInjection</RootNamespace>
+    </PropertyGroup>
+    <PropertyGroup>
+        <RepositoryRoot>../..</RepositoryRoot>
+    </PropertyGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\Cqrs.Engine\Cqrs.Engine.csproj"/>
+    </ItemGroup>
+    <ItemGroup>
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.2" />
+    </ItemGroup>
+    <ItemGroup>
+      <EmbeddedResource Update="CommandHandlerFactoryResources.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>CommandHandlerFactoryResources.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="QueryHandlerFactoryResources.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>QueryHandlerFactoryResources.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="HandlerFactoryResources.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>HandlerFactoryResources.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+    </ItemGroup>
+    <ItemGroup>
+      <Compile Update="CommandHandlerFactoryResources.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>CommandHandlerFactoryResources.resx</DependentUpon>
+      </Compile>
+      <Compile Update="QueryHandlerFactoryResources.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>QueryHandlerFactoryResources.resx</DependentUpon>
+      </Compile>
+      <Compile Update="HandlerFactoryResources.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>HandlerFactoryResources.resx</DependentUpon>
+      </Compile>
+    </ItemGroup>
+    <Import Project="$(RepositoryRoot)/Packages.Cqrs.Targets"/>
+
+</Project>

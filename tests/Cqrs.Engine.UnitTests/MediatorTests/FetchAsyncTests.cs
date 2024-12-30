@@ -67,7 +67,7 @@ public class FetchAsyncTests
     private void HandlerIsRegistered(IQuery<ExampleResult> query, IQueryHandler handler)
     {
         this.queryHandlerFactory
-            .Setup(chf => chf.Create(query))
+            .Setup(chf => chf.CreateHandler(query))
             .Returns(handler);
     }
 
@@ -97,7 +97,7 @@ public class FetchAsyncTests
     {
         this.EnsureExecuted();
         this.queryHandlerFactory
-            .Verify(chf => chf.Create(query));
+            .Verify(chf => chf.CreateHandler(query));
     }
 
     private void HandlerIsCalled(Mock<IQueryHandler> handler, IQuery<ExampleResult> query)

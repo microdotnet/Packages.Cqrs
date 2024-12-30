@@ -3,12 +3,12 @@
     <PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
+        <Nullable>disable</Nullable>
 
         <IsPackable>false</IsPackable>
         <IsTestProject>true</IsTestProject>
-        <AssemblyName>MicroDotNet.Packages.Cqrs.Engine.UnitTests</AssemblyName>
-        <RootNamespace>MicroDotNet.Packages.Cqrs.Engine.UnitTests</RootNamespace>
+        <AssemblyName>MicroDotNet.Packages.Cqrs.IntegrationTests</AssemblyName>
+        <RootNamespace>MicroDotNet.Packages.Cqrs.IntegrationTests</RootNamespace>
     </PropertyGroup>
     <PropertyGroup>
         <RepositoryRoot>../..</RepositoryRoot>
@@ -19,9 +19,14 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\..\src\Cqrs.Factories.DependencyInjection\Cqrs.Factories.DependencyInjection.csproj" />
         <ProjectReference Include="..\..\src\Cqrs.Engine\Cqrs.Engine.csproj" />
         <ProjectReference Include="..\..\src\Cqrs\Cqrs.csproj" />
         <ProjectReference Include="..\Stories\Stories.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.1" />
     </ItemGroup>
     <Import Project="$(RepositoryRoot)/Packages.Cqrs.Targets"/>
 
